@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quên Mật Khẩu - Bước 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #F8BC3B;
+            --primary-hover: #85461F;
+            --text-color: #38312F;
+            --highlight-color: #FF0000;
+            --focus-border: #E2BF9E;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        input:focus {
+            border-color: var(--focus-border) !important;
+            box-shadow: 0 0 0 2px var(--focus-border) !important;
+        }
+        .otp-group input {
+            width: 2.5rem;
+            height: 2.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 2px solid var(--focus-border);
+            border-radius: 8px;
+            margin-right: 0.5rem;
+        }
+        .otp-group input:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="overlay">
+        <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                    <img src="/img/Asset 2@3x.png" alt="Logo" class="w-16 mr-2">
+                    <h2 class="text-2xl font-bold text-gray-900">QUÊN MẬT KHẨU</h2>
+                </div>
+                <button onclick="hidePopup()" class="text-gray-600 hover:text-gray-900">✖</button>
+            </div>
+            <p class="text-gray-600 text-left mb-4">
+                Chúng tôi đã gửi mã xác thực đến địa chỉ email  
+                <a href="#" class="text-[var(--primary-color)] font-medium">example@email.com</a>.
+                <br>Vui lòng nhập mã xác thực bạn đã nhận được!
+            </p>
+
+            <div class="otp-group flex justify-center gap-2 mb-4">
+                <input type="text" maxlength="1" oninput="moveNext(this, 'otp2')">
+                <input type="text" maxlength="1" id="otp2" oninput="moveNext(this, 'otp3')">
+                <input type="text" maxlength="1" id="otp3" oninput="moveNext(this, 'otp4')">
+                <input type="text" maxlength="1" id="otp4" oninput="moveNext(this, 'otp5')">
+                <input type="text" maxlength="1" id="otp5" oninput="moveNext(this, 'otp6')">
+                <input type="text" maxlength="1" id="otp6">
+            </div>
+
+            <button type="button" onclick="nextStep()" class="w-full mt-6 bg-[var(--primary-color)] text-white py-2 rounded-lg hover:bg-[var(--primary-hover)] transition">Tiếp tục</button>
+
+            <p class="text-center mt-4 text-sm text-gray-700">
+                Bạn chưa nhận được mã? <a href="#" class="text-[var(--primary-color)] hover:text-[var(--primary-hover)] font-medium">Gửi lại mã</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function nextStep() {
+            window.location.href = "reset-step3.html";
+        }
+
+        function moveNext(current, nextId) {
+            if (current.value.length === 1) {
+                document.getElementById(nextId)?.focus();
+            }
+        }
+    </script>
+</body>
+</html>

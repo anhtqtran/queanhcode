@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>So sánh sản phẩm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #F8BC3B; /* Sử dụng màu chính của bạn */
+            --primary-hover: #85461F; /* Màu khi hover */
+            --text-color: #38312F; /* Màu chữ chính */
+            --background-color: #f8f8f8; /* Màu nền chính */
+            --error-color: #D32F2F; /* Đỏ thông báo lỗi */
+            --font-family: 'inter', sans-serif; /* Font chữ thống nhất */
+        }
+
+        /* Áp dụng font chữ chung cho tất cả các thành phần */
+        body {
+            font-family: var(--font-family);
+        }
+
+        .even-row {
+            background-color: #f9fafb;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Điều chỉnh vị trí của các nút */
+        .product-actions {
+            position: absolute;
+            top: -20px; /* Di chuyển lên trên */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px; /* Khoảng cách giữa các nút */
+        }
+    </style>
+</head>
+<body class="bg-background-color">
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">So sánh sản phẩm</h1>
+
+        <!-- Popup thông báo lỗi -->
+        <div id="error-popup" class="overlay hidden">
+            <div class="bg-white p-8 rounded-lg text-center shadow-lg">
+                <p class="text-red-600 font-semibold text-lg mb-4">Vui lòng chọn ít nhất 2 và tối đa 3 sản phẩm để so sánh.</p>
+                <button onclick="closeErrorPopup()" class="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600">Đóng</button>
+            </div>
+        </div>
+
+        <!-- Bảng so sánh sản phẩm -->
+        <div id="comparison-section" class="overflow-x-auto" style="display: none;">
+            <table class="w-full border border-gray-300 bg-white shadow-lg">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-4"></th>
+                        <th class="p-4 text-center" id="product-1"></th>
+                        <th class="p-4 text-center" id="product-2"></th>
+                        <th class="p-4 text-center" id="product-3"></th>
+                    </tr>
+                </thead>
+                <tbody id="comparison-table">
+                    <!-- Nội dung sản phẩm sẽ được cập nhật bằng JS -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        let products = [
+            {
+                id: 1,
+                name: "Sản phẩm A",
+                image: "https://placehold.co/100x300",
+                price: "830.000₫",
+                brand: "Thương hiệu A",
+                volume: "300 ml",
+                strength: "15%",
+                flavor: "Ngọt, nhẹ",
+                ingredient: "Gạo",
+                origin: "Nhật Bản",
+                type: "Sake",
+                rating: "★★★★☆"
+            },
+            {
+                id: 2,
+                name: "Sản phẩm B",
+                image: "https://placehold.co/100x300",
+                price: "10.660.000₫",
+                brand: "Thương hiệu B",
+                volume: "720 ml",
+                strength: "16%",
+                flavor: "Đậm đà, phức tạp",
+                ingredient: "Gạo",
+                origin: "Nhật Bản",
+                type: "Sake",
+                rating: "★★★★★"
+            }
+        ];
+
+        function renderComparisonTable() {
+            let comparisonSection = document.getElementById("comparison-section");
+            let errorPopup = document.getElementById("error-popup");
+
+            if (products.length < 2 || products.length > 3) {
+                comparisonSection.style.display = "none";
+                errorPopup.classList.remove("hidden");
+                return;
+            } else {
+                comparisonSection.style.display = "block";
+                errorPopup.classList.add("hidden");
+            }
+
+            let attributes = [
+                { key: "brand", label: "Thương hiệu" },
+                { key: "price", label: "Giá" },
+                { key: "volume", label: "Dung tích" },
+                { key: "strength", label: "Độ mạnh" },
+                { key: "flavor", label: "Hương vị" },
+                { key: "ingredient", label: "Nguyên liệu" },
+                { key: "origin", label: "Xuất xứ" },
+                { key: "type", label: "Loại sản phẩm" },
+                { key: "rating", label: "Đánh giá" }
+            ];
+
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`product-${i + 1}`).innerHTML = products[i] ? `
+                    <div class="relative w-32 mx-auto">
+                        <div class="product-actions">
+                            <button onclick="addToCart(${i})" class="bg-green-500 text-white px-2 py-1 rounded-lg shadow hover:bg-green-600">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                            <button onclick="removeProduct(${i})" class="bg-red-500 text-white px-2 py-1 rounded-lg shadow hover:bg-red-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <img src="${products[i].image}" class="mx-auto w-24 h-32 object-cover mt-8 rounded-lg shadow-lg">
+                        <p class="mt-2 text-gray-700 font-medium text-center">${products[i].name}</p>
+                    </div>
+                ` : "";
+            }
+
+            let tableBody = "";
+            attributes.forEach((attribute, index) => {
+                let rowClass = index % 2 === 0 ? "even-row" : ""; // Chọn màu nền cho dòng chẵn
+                let row = `<tr class="${rowClass}">
+                    <td class="p-4 font-semibold text-gray-700">${attribute.label}</td>
+                `;
+                for (let i = 0; i < 3; i++) {
+                    row += products[i] ? `<td class="p-4 text-center">${products[i][attribute.key]}</td>` : `<td class="p-4 text-center">-</td>`;
+                }
+                row += "</tr>";
+                tableBody += row;
+            });
+
+            document.getElementById("comparison-table").innerHTML = tableBody;
+        }
+
+        function removeProduct(index) {
+            products.splice(index, 1);
+            renderComparisonTable();
+        }
+
+        function addToCart(index) {
+            alert(`Sản phẩm ${products[index].name} đã được thêm vào giỏ hàng!`);
+        }
+
+        function closeErrorPopup() {
+            document.getElementById("error-popup").classList.add("hidden");
+        }
+
+        renderComparisonTable();
+    </script>
+</body>
+</html>

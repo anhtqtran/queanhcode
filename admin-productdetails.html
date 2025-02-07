@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Chỉnh sửa sản phẩm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6 bg-white rounded-xl shadow-lg">
+        <button class="text-[#85461F] text-lg mb-6 flex items-center gap-2" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> Quay lại trang sản phẩm
+        </button>
+
+        <h1 class="text-3xl font-bold text-[#85461F] mb-6">Chỉnh sửa sản phẩm</h1>
+
+        <form enctype="multipart/form-data">
+            <div class="mb-4">
+                <label for="productName" class="block text-gray-700">Tên sản phẩm</label>
+                <input type="text" id="productName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Tên sản phẩm"/>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <div>
+                    <label for="brand" class="block text-gray-700">Thương hiệu</label>
+                    <input type="text" id="brand" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Thương hiệu"/>
+                </div>
+                <div>
+                    <label for="type" class="block text-gray-70">Loại</label>
+                    <input type="text" id="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Loại"/>
+                </div>
+                <div>
+                    <label for="shortDesc" class="block text-gray-700">Mô tả ngắn</label>
+                    <input type="text" id="shortDesc" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Mô tả ngắn"/>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="longDesc" class="block text-gray-700">Mô tả chi tiết</label>
+                <textarea id="longDesc" class="w-full px-4 py-2 border border-gray-300 rounded-lg" rows="4" placeholder="Mô tả chi tiết"></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="productGroup" class="block text-gray-700">Nhóm sản phẩm</label>
+                    <select id="productGroup" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <option>Rượu ABC</option>
+                        <option>Rượu XYZ</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="promo" class="block text-gray-700">Khuyến mãi</label>
+                    <select id="promo" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <option>Có</option>
+                        <option>Không</option>
+                    </select>
+                </div>
+            </div>
+
+            <label class="block text-gray-700">Hình ảnh sản phẩm</label>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                <script>
+                    for (let i = 1; i <= 4; i++) {
+                        document.write(`
+                            <div class="relative">
+                                <input type="file" id="image${i}" class="absolute inset-0 opacity-0" onchange="handleImageUpload(${i})" />
+                                <label for="image${i}" class="border border-gray-300 p-4 h-40 flex justify-center items-center cursor-pointer">
+                                    <span id="imageLabel${i}" class="text-gray-500 text-xl">+</span>
+                                    <img id="imagePreview${i}" class="hidden w-full h-full object-cover" />
+                                </label>
+                                <div id="removeBtn${i}" class="absolute top-2 right-2 text-red-500 cursor-pointer hidden" onclick="removeImage(${i})">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                            </div>
+                        `);
+                    }
+                </script>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="price" class="block text-gray-700">Giá</label>
+                    <input type="number" id="price" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Giá"/>
+                </div>
+                <div>
+                    <label for="comparePrice" class="block text-gray-700">Giá so sánh</label>
+                    <input type="number" id="comparePrice" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Giá so sánh"/>
+                </div>
+            </div>
+
+            <div class="flex justify-between">
+                <button type="button" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400" onclick="closeEditProductModal()">Hủy thay đổi</button>
+                <button type="submit" class="bg-[#F8BC3B] text-white px-6 py-2 rounded-lg hover:bg-[#D8A850]">Lưu</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function closeEditProductModal() {
+            // Đóng modal (nếu cần)
+        }
+
+        tinymce.init({
+            selector: '#longDesc',
+            plugins: 'advlist autolink lists link image charmap print preview anchor',
+            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image',
+            menubar: false,
+            height: 300,
+        });
+
+        function handleImageUpload(imageIndex) {
+            const inputElement = document.getElementById(`image${imageIndex}`);
+            const labelElement = document.getElementById(`imageLabel${imageIndex}`);
+            const previewElement = document.getElementById(`imagePreview${imageIndex}`);
+            const removeBtn = document.getElementById(`removeBtn${imageIndex}`);
+            if (inputElement.files && inputElement.files[0]) {
+                const file = inputElement.files[0];
+                labelElement.classList.add('hidden');
+                previewElement.classList.remove('hidden');
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewElement.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                removeBtn.classList.remove("hidden");
+            }
+        }
+
+        function removeImage(imageIndex) {
+            const inputElement = document.getElementById(`image${imageIndex}`);
+            const labelElement = document.getElementById(`imageLabel${imageIndex}`);
+            const previewElement = document.getElementById(`imagePreview${imageIndex}`);
+            const removeBtn = document.getElementById(`removeBtn${imageIndex}`);
+            inputElement.value = "";
+            labelElement.classList.remove('hidden');
+            previewElement.classList.add('hidden');
+            removeBtn.classList.add("hidden");
+        }
+    </script>
+</body>
+</html>

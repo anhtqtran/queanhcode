@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Danh sách sản phẩm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6 bg-white rounded-xl shadow-lg">
+        <!-- Header Section -->
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-[#85461F]">Danh sách sản phẩm</h1>
+            <button class="bg-[#F8BC3B] text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[#D8A850] transition font-medium">
+                <i class="fas fa-plus"></i> Thêm sản phẩm
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mb-4">
+            <!-- Filter Button -->
+            <button class="bg-[#F2E8DA] text-[#85461F] px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[#D8A850] transition font-medium border border-[#85461F]" onclick="openFilterModal()">
+                <i class="fas fa-filter"></i> Thêm điều kiện lọc
+            </button>
+             <!-- Modal Filter -->
+            <div id="filterModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center hidden">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+                    <h2 class="text-xl font-bold text-[#85461F] mb-4">Thêm điều kiện lọc</h2>
+                    <form>
+                        <div class="mb-4">
+                            <label for="filterType" class="block text-gray-700">Hiển thị sản phẩm theo</label>
+                            <select id="filterType" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                                <option>Loại sản phẩm</option>
+                                <option>Rượu ngâm</option>
+                                <option>Rượu mận</option>
+                                <!-- Add more options as necessary -->
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="filterValue" class="block text-gray-700">Là</label>
+                            <select id="filterValue" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                                <option>Khác</option>
+                                <option>Loại 1</option>
+                                <option>Loại 2</option>
+                                <!-- Add more options as necessary -->
+                            </select>
+                        </div>
+
+                        <div class="flex justify-between">
+                            <button type="button" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400" onclick="closeFilterModal()">Hủy</button>
+                            <button type="submit" class="bg-[#F8BC3B] text-white px-6 py-2 rounded-lg hover:bg-[#D8A850]">Thêm điều kiện lọc</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Search Input -->
+            <div class="relative w-1/2">
+                <input class="border border-gray-300 px-4 py-2 rounded-lg w-full pl-10 focus:ring-2 focus:ring-[#D8A850] focus:outline-none" placeholder="Tìm kiếm" type="text"/>
+                <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="overflow-x-auto rounded-lg shadow-md">
+            <table class="w-full table-auto text-left">
+                <thead class="bg-[#38312F] text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-center"><input type="checkbox"/></th>
+                        <th class="px-6 py-3 text-left">Tên sản phẩm</th>
+                        <th class="px-6 py-3 text-center">Tồn kho</th>
+                        <th class="px-6 py-3 text-center">Loại</th>
+                        <th class="px-6 py-3 text-center">Nhà cung cấp</th>
+                        <th class="px-6 py-3 text-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <!-- Product Row Example -->
+                    <tr class="border-b hover:bg-[#F2E8DA]">
+                        <td class="px-6 py-3 text-center align-middle"><input type="checkbox"/></td>
+                        <td class="px-6 py-3 flex items-center gap-3 align-middle">
+                            <img class="w-14 h-14 rounded-lg object-cover" src="https://storage.googleapis.com/a1aa/image/MVY14fmvGKPOWeiKtwI32zp18Ou6kd9H0nEa3nOdbkc.jpg" alt="Rượu mận máu Hoàng Su Phi"/>
+                            <div class="flex flex-col justify-center">
+                                <span class="font-medium text-[#85461F]">Rượu mận máu Hoàng Su Phi</span>
+                                <small class="text-gray-500">SKU: HSPR</small>
+                            </div>
+                        </td>
+                        <td class="px-6 py-3 font-medium text-center align-middle">100</td>
+                        <td class="px-6 py-3 text-center align-middle">Rượu ngâm</td>
+                        <td class="px-6 py-3 text-center align-middle">Mầm Distillery</td>
+                        <td class="px-6 py-3 text-center align-middle">
+                            <div class="flex justify-center items-center gap-4 h-full">
+                                <i class="fas fa-eye cursor-pointer text-[#85461F] hover:text-[#D8A850]"></i>
+                                <i class="fas fa-edit cursor-pointer text-[#85461F] hover:text-[#D8A850]"></i>
+                                <i class="fas fa-trash cursor-pointer text-[#85461F] hover:text-red-500"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="flex justify-between items-center mt-6">
+            <!-- Show Entries Select -->
+            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D8A850]">
+                <option>Hiển thị 20</option>
+                <option>Hiển thị 50</option>
+                <option>Hiển thị 100</option>
+            </select>
+            <!-- Total Products Display -->
+            <div class="text-gray-700">Tổng sản phẩm: 10</div>
+        </div>
+    </div>
+    <script>
+        function openFilterModal() {
+            document.getElementById('filterModal').classList.remove('hidden');
+        }
+
+        function closeFilterModal() {
+            document.getElementById('filterModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

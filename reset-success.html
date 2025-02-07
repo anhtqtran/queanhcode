@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thành Công</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #F8BC3B;
+            --primary-hover: #85461F;
+            --text-color: #38312F;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="overlay">
+        <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-center">
+            <div class="flex flex-col items-center">
+                <img src="/img/Asset 2@3x.png" alt="Logo" class="w-16 mb-2">
+                <h2 class="text-2xl font-bold text-gray-900">THÀNH CÔNG</h2>
+            </div>
+            <p class="text-gray-600 mt-4">Mật khẩu của bạn đã được cập nhật thành công.</p>
+
+            <button onclick="goToLogin()" class="w-full mt-6 bg-[var(--primary-color)] text-white py-2 rounded-lg hover:bg-[var(--primary-hover)] transition">Đăng nhập ngay</button>
+        </div>
+    </div>
+
+    <script>
+        function goToLogin() {
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>

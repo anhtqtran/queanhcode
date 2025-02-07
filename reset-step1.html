@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quên Mật Khẩu - Bước 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-color: #F8BC3B;
+            --primary-hover: #85461F;
+            --text-color: #38312F;
+            --highlight-color: #FF0000;
+            --focus-border: #E2BF9E;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        input:focus {
+            border-color: var(--focus-border) !important;
+            box-shadow: 0 0 0 2px var(--focus-border) !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="overlay">
+        <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                    <img src="/img/Asset 2@3x.png" alt="Logo" class="w-16 mr-2">
+                    <h2 class="text-2xl font-bold text-gray-900">QUÊN MẬT KHẨU</h2>
+                </div>
+                <button onclick="hidePopup()" class="text-gray-600 hover:text-gray-900">✖</button>
+            </div>
+            <p class="text-gray-600 text-left mb-4">Vui lòng nhập địa chỉ email bạn đã sử dụng để tạo tài khoản, chúng tôi sẽ gửi cho bạn mã xác thực để đặt lại mật khẩu.</p>
+
+            <form>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email <span class="text-[var(--highlight-color)]">*</span></label>
+                <input type="email" id="email" name="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none" required>
+
+                <button type="button" onclick="nextStep()" class="w-full mt-6 bg-[var(--primary-color)] text-white py-2 rounded-lg hover:bg-[var(--primary-hover)] transition">Tiếp tục</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function nextStep() {
+            window.location.href = "reset-step2.html";
+        }
+    </script>
+</body>
+</html>
